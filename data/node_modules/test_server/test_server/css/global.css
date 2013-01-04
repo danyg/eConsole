@@ -1,0 +1,171 @@
+* { margin: 0; padding: 0; empty-cells: show; line-height: 1.2em;}
+
+/* - - - global - - - */
+BODY 
+{
+	font-size: 12px;
+	font-weight: normal;
+}
+
+table, th, td, tr
+{
+	font-size: 12px;
+	font-family: "Trebuchet MS", Sans-Serif;
+	font-weight: normal;
+	border: 0;
+}
+
+IMG 
+{ 
+	display: block;
+	border: none 0px black;
+}
+a img{border: 0;}
+
+UL, UL LI, OL, OL LI
+{
+	list-style: none;
+}
+
+h1{font-size: 2em; line-height: 1.2em;}
+h2{font-size: 1.6em; line-height: 1.2em;}
+h3{font-size: 1.3em; line-height: 1.2em;}
+h4{font-size: 1em; line-height: 1.2em;}
+h5{font-size: 0.8em; line-height: 1.2em;}
+h6{font-size: 0.6em; line-height: 1.2em;}
+
+p,legend,h1,h2,h3,h4,h5,h6,span,label,li{cursor: default;}
+input[type=submit]{cursor: pointer;}
+
+/* http://positioniseverything.net/easyclearing.html */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	#display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	#display: block;
+}
+
+* html .clearfix {height: 1%; }
+* html .clearfix {height: 1%; }
+
+.left,.middle
+{
+	float: left !important;
+	display: inline;
+}	
+
+.right
+{
+	float: right !important;
+	display: inline;
+	text-align: left;
+}
+
+.oLeft,.oMiddle
+{
+	float: left !important;
+	display: inline;
+	clear: both;
+}	
+
+.oRight{
+	float: right !important;
+	display: inline;
+	text-align: left;
+	clear: both;
+}
+
+.TextImage
+{
+	display: block;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+	.TextImage SPAN
+	{
+		display: none;
+	}
+
+.Spacer
+{
+	clear: both;
+}
+
+.Hidden
+{
+	display: none !important;
+}
+
+
+ul.LinkBar{list-style: none;}
+	ul.LinkBar > li{float: left;display: inline;}
+	
+ul.rLinkBar{list-style: none;}
+	ul.rLinkBar > li{float: right;display: inline;}
+
+h1, h2, h3, h4, h5 
+	{
+	font-weight:normal; 
+	#position: relative; /* arregla scroll de IE */
+	}
+
+p	{ #position: relative; } /* arregla scroll en IE */
+
+.Center{ text-align: center; }
+
+	.Center * { margin: 0 auto; }
+
+.Boton, .Boton *
+{
+	cursor: pointer;
+}
+/**/
+
+.defField{cursor: default;}
+
+body .ui-context{
+	border: solid 1px #ddd;
+	border-color: #ddd #888 #888 #ddd;
+	
+	-moz-box-shadow: 1px 1px 5px #888;
+	-o-box-shadow: 1px 1px 5px #888;
+	-icab-box-shadow: 1px 1px 5px #888;
+	-khtml-box-shadow: 1px 1px 5px #888;
+	-webkit-box-shadow: 1px 1px 5px #888;
+	box-shadow: 1px 1px 5px #888;
+	overflow: hidden;
+}
+
+.ui-context-item{
+	border:none !important;
+	padding: 5px;
+	min-height: 16px;
+	line-height: 16px;
+}
+.ui-context .ui-context-item .NAME{font-weight: normal;}
+.ui-context .ui-context-item .ui-icon{
+	margin-right: 10px;
+}
+
+.ui-icon-none{background-image:none !important;}
+.ui-iconLeft{
+	float: left;
+	display: inline;
+	margin-right: 5px;
+}
+
+img.ui-icon{
+	border: none 0px transparent !important;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Javascript External Console</title>
+		<script type="text/javascript" src="js/lib/jquery.js"></script>
+		<script type="text/javascript" src="js/lib/require.js"></script>
+
+		<script type="text/javascript" src="js/obj/serverToClient.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/obj/record.js"></script>
+		<script type="text/javascript" src="js/obj/client.js"></script>
+		<script type="text/javascript" src="js/obj/GUI.js"></script>
+		
+		<link href="css/global.css" type="text/css" media="screen" rel="stylesheet"/>
+		<link href="css/styles.css" type="text/css" media="screen" rel="stylesheet"/>
+	</head>
+	<body>
+		<ul class="LinkBar clearfix clientsTab" id="CLIENTS"></ul> 
+		<div id="CLIENTS_CONSOLES">
+			<div class="CLIENT_CONSOLE_TEMPLATE clientConsole">
+				<p class="CLIENT_INFO clientInfo"></p>
+				<ul class="logger">
+
+				</ul>
+				<textarea class="PROMPT prompt"></textarea>
+			</div>
+		</div>
+
+	</body>	
+</html>
