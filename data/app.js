@@ -1,4 +1,4 @@
-require('test_server')
+//require('test_server')
 var logger = require('logger');
 var app = module.exports = require('appjs');
 
