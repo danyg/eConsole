@@ -68,7 +68,7 @@
 		},
 		
 		openRecord: function(key, argNum, path){
-			window.clientToServer.openRecord(this.id, key, argNum, path);
+			window.GUItoServer.openRecord(this.id, key, argNum, path);
 		},
 
 		newElement: function(msg){
@@ -137,7 +137,7 @@
 		},
 		
 		exec: function(code){
-			window.clientToServer.exec(this.id, code);
+			window.GUItoServer.exec(this.id, code);
 		},
 		
 		pushPA: function(code){

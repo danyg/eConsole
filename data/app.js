@@ -1,7 +1,47 @@
-//require('test_server')
 var logger = require('logger');
-var app = module.exports = require('appjs');
+var CLIArgs = require('CLIArgs');
+require('test_server');
 
+CLIArgs.add('noGUI', 'Si se pasa este parametro, solo se actuara como servidor, esperando consolas externas.');
+CLIArgs.add('noServer', 'Actuara como consola externa, debe especificarse el argumento server');
+CLIArgs.add('server', 'IP o hostname del servidor al ser usado como consola externa', true);
+CLIArgs.add('server_port', 'Puerto en el que trabaja el Socket.io del servidor eConsole Remoto', true);
+
+require('GUItoServer');
+var GUI = require('GUI');
+var Server = require('Server');
+// require things
+
+CLIArgs.process();
+
+if(!CLIArgs.has('noGUI')){
+	GUI.initialize();
+}
+// SERVER SI, CLI NO, inicio server
+if(!CLIArgs.has('noServer') && CLIArgs.has('noCLI')){
+	Server.open();
+}
+// SERVER SI, CLI SI, espero a CLI OK para iniciar server
+if(!CLIArgs.has('noServer') && !CLIArgs.has('noCLI')){
+	GUI.on('gui-ready', function(){
+		Server.open();
+	});
+	GUI.on('gui-close', function(){
+		Server.close();
+	});
+}
+// clientToServer | serverToClient !!!
+/*
+logger.debug('port: ', CLIArgs.has('port'));
+logger.debug('testserver: ', CLIArgs.has('testserver'));
+logger.debug('testserver_port: ', CLIArgs.has('testserver_port'));
+logger.debug('devtools: ', CLIArgs.has('devtools'));
+logger.debug('noGUI: ', CLIArgs.has('noGUI'));
+logger.debug('noServer: ', CLIArgs.has('noServer'));
+logger.debug('server: ', CLIArgs.has('server'));
+logger.debug('server_port: ', CLIArgs.has('server_port'));
+
+process.exit();
 app.serveFilesFrom(__dirname + '/content');
 
 var window = app.createWindow({
@@ -52,6 +92,7 @@ window.on('ready', function(){
 	});
 });
 var serverToClient;
+// GUIToServer
 var clientToServer = {
 	exec: function(sID, code){
 		try{
@@ -137,3 +178,4 @@ function start_io(){
 function stop_io(){
 	io.close();
 }
+*/

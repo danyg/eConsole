@@ -5,7 +5,7 @@
 
 (function(){
 
-	window.serverToClient = {
+	window.serverToGUI = {
 		clients: {},
 		newClient: function(data, sID){
 			var me = this;
