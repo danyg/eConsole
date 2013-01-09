@@ -110,7 +110,7 @@ html[xmlns] .clearfix {
 
 
 ul.LinkBar{list-style: none;}
-	ul.LinkBar > li{float: left;display: inline;}
+	ul.LinkBar > li{display: inline-block;}
 	
 ul.rLinkBar{list-style: none;}
 	ul.rLinkBar > li{float: right;display: inline;}

@@ -17,6 +17,8 @@
 		init: function(){
 			this.clientsCount = 0;
 			this.clients = {};
+			this.slider = $('.SLIDER');
+			this.scrollBtns = $('.scrollBtns');
 			
 			var me = this,
 				tmp
@@ -37,6 +39,33 @@
 				me.wResize();
 			});
 			
+			var scrollI, elm = this.slider, step;
+			$('.LEFT_SCROLL').mousedown(function(){
+				var i = 0;
+				step = 5;
+				scrollI = setInterval(function(){
+					step = step + (i/3);
+					i++;
+					console.log( elm.scrollLeft() - step )
+					elm.scrollLeft( elm.scrollLeft() - step);
+				}, 100);
+			}).bind('mouseout mouseup blur', function(){
+				clearInterval(scrollI);
+			});
+			$('.RIGHT_SCROLL').mousedown(function(){
+				var i = 0;
+				step = 5;
+				scrollI = setInterval(function(){
+					step = step + (i/3);
+					i++;
+					console.log( elm.scrollLeft() + step )
+					elm.scrollLeft( elm.scrollLeft() + step);
+				}, 100);
+			}).bind('mouseout mouseup blur', function(){
+				clearInterval(scrollI);
+			});
+			
+			
 			window.emit('gui-ready');
 		},
 		
@@ -44,6 +73,10 @@
 			this.consoles.height(
 				$(window).height() - 
 				this.tabs.outerHeight()
+			);
+				
+			this.slider.width(
+				$(window).width() - this.scrollBtns.boundWidth()
 			);
 		},
 
@@ -60,12 +93,16 @@
 			;
 			
 			ret.tab = this.tabTmpl.clone()
-				.text(name)
 				.click(function(){
 					me.hideAll();
 					controller.show();
 				})
 				.appendTo(this.tabs)
+				.disableSelection()
+			;
+console.log('name', name);
+			ret.tab
+				.text(name)
 			;
 			return ret;
 		},
@@ -80,6 +117,7 @@
 		},
 
 		newClient: function(data, id){
+			try{
 			var client = new window.Client(data, id);
 			this.clients[id] = client;
 			this.clientsCount++;
@@ -89,6 +127,9 @@
 			}
 			
 			return client;
+			}catch(e){
+				console.log(e);
+			}
 		},
 
 		clientDisconnect: function(id){
@@ -102,7 +143,21 @@
 		window.GUI.init();
 	});
 
-	
+$.fn.extend({
+	enableSelection: function() {
+		return this
+			.attr('unselectable', 'off')
+			.css('MozUserSelect', '')
+			.unbind('selectstart.ui');
+	},
+
+	disableSelection: function() {
+		return this
+			.attr('unselectable', 'on')
+			.css('MozUserSelect', 'none')
+			.bind('selectstart.ui', function() { return false; });
+	}
+});
 
 
 }(jQuery));
