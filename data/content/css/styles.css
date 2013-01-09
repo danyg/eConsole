@@ -57,6 +57,7 @@ body{background: white;}
 }
 
 .clientConsole .logger{
+	font: normal 12px/16px Consolas;
 	margin:0;padding:0;
 	width: 100%;
 	overflow-x: hidden;
@@ -78,6 +79,7 @@ body{background: white;}
 }
 .clientConsole .logger > li ul.clearfix li ul li{
 	padding: 4px 0px 0px 10px;
+	white-space: nowrap;
 }
 .clientConsole .logger > li ul.clearfix li ul li:first-child{
 	padding-top: 0px;
@@ -93,4 +95,62 @@ body{background: white;}
 	color: white;
 	font: normal 11px/13px Consolas;
 	height: 26px;
+}
+
+div.inspectable{
+	display: inline;
+	float: left;
+	padding-left: 5px;
+}
+
+.inspectable ul{
+	float: none;
+	clear: both;
+}
+
+span.label{
+	display: inline;
+	float:left;
+	padding-right: 5px;
+}
+
+.type_string:before{
+	content: '"';
+}
+.type_string:after{
+	content: '"';
+}
+.type_string{
+	color: darkorchid;
+	font-weight: bold;
+}
+.type_number{
+	color: orange;
+	font-weight: bold;
+}
+.type_object{
+	color: #2F6FAD;
+	font-weight: bold;
+}
+.type_array{
+	color: deepskyblue;
+	font-weight: bold;
+}
+.type_function{
+	color: blue;
+	font-weight: bold;
+	font-style: italic;
+}
+.type_null,
+.type_undefined{
+	color: darkgreen;
+	font-weight: bold;
+}
+.type_boolean{
+	color: blue;
+	font-weight: bold;
+}
+
+.label.key:after{
+	content: ': ';
 }

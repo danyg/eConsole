@@ -5,20 +5,32 @@
 
 (function(){
 
-	window.inspectElement = function(label, ulClass, tagName){
+	window.inspectElement = function(label, type, ulClass, tagName){
+		if(undefined === label || label === ''){
+			label = 'unknowObject';
+		}
 		this.label = label;
+
+		if(type === undefined){
+			type = 'Object';
+		}
+		this.type = type;
 
 		if(tagName === undefined){
 			tagName = 'div';
 		}
 
-		this.element = $('<' + tagName + '>');
+		this.element = $('<' + tagName + '>')
+			.addClass('inspectable')
+		;
 
-		if(label){
-			this.element
-				.append($('<span class="label">').text(this.label))
-			;
-		}
+		this.element
+			.append(
+				this.labelElm = $('<span class="label">')
+						.addClass('type_' + this.type)
+					.text(this.label)
+			)
+		;
 
 		this.element
 			.append(
@@ -49,16 +61,21 @@
 			return this.element;
 		},
 		
+		cleanChilds: function(){
+			this.childsPlace.empty();
+		},
+		
 		addChild: function(key, val, className){
 			var elm = $('<li>')
+				.addClass('clearfix')
 				.addClass(className)
 				.append(
-					$('<span class="label">').text(key)
+					$('<span class="label key">').text(key)
 				)
 			;
 
 			if(!(val instanceof window.inspectElement)){
-				elm.append($('<span class"value">').text(val));
+				elm.append(val);
 			}else{
 				elm.append(val.getElement());
 			}
@@ -70,8 +87,14 @@
 
 		_setEvents: function(){
 			var me = this;
-			this.element.click(function(){
-				me._toggle();
+			this.labelElm.click(function(e){
+				if(!e.isPropagationStopped()){
+					me._toggle();
+				}
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+				e.preventDefault();
+				return false;
 			});
 		},
 		
