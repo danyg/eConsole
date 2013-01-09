@@ -112,6 +112,7 @@
 						}else if(typeof(args[key]) === 'object'){
 							// prototype data...
 							// make inspectElement & addChilds & close!
+							val = this._getSubElmentOfObject(args[key], 'div', data.argNum, path + key);
 						}
 
 						iElm.addChild(key, val);
@@ -123,6 +124,40 @@
 				console.log(O);
 				console.groupEnd();
 			}
+		},
+		
+		_getSubElmentOfObject: function(data, tagName, argNum, path){
+			var O = new window.inspectElement('Object', typeof(data), '', tagName),
+				subO,
+				key
+			;
+			if(undefined !== path && path !== ''){
+				path = path + '.';
+			}
+			for(key in data){
+				if(data.hasOwnProperty(key)){
+					if(typeof(data[key]) === 'string'){
+						O.addChild(key, 
+							this._getSubElement(
+								data[key], 
+								'div', 
+								argNum,
+								path + key
+							)
+						);
+					}else{
+						O.addChild(key, 
+							this._getSubElmentOfObject(
+								data[key], 
+								'div', 
+								argNum,
+								path + key
+							)
+						);
+					}
+				}
+			}
+			return O.getElement();
 		},
 		
 		_getSubElement: function(arg, tagName, argNum, path){

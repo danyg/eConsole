@@ -6,11 +6,16 @@
 
 	window.Client = function(data, id){
 		this.id = id;
-		this.name = id; // podra cambiarse!
 		this.ua = data.ua;
 		this.screen = data.screen;
-		this.window = data.window; // pa que?
 		this.records = {};
+		this.connected = true;
+		this.active = false;
+		this.name = data.name;
+		
+		if(this.name === null || this.name === ''){
+			this.name = this.id;
+		}
 		
 		var me = this,
 			tmp = window.GUI.buildNewClientElements(this.name, this)
@@ -21,6 +26,9 @@
 		this.clientInfo = $('.clientInfo', this.element);
 		this.prompt = $('.PROMPT', this.element);
 		this.tab = tmp.tab;
+		this.tab.dblclick(function(){
+			me.rename();
+		})
 		
 		this.fillInfo();
 		this.resize();
@@ -28,11 +36,17 @@
 		$(window).resize(function(){
 			me.resize();
 		})
+		
+		if(this.name !== null && this.name !== '' && this.name !== this.id){
+			this.setName(this.name, false);
+		}
 	};
 	
 	window.Client.prototype = {
 		active: null,
 		records: null,
+		connected: null,
+		highlightTimer: null,
 		
 		resize: function(){
 			this.logger.height(
@@ -47,20 +61,21 @@
 			this.clientInfo.html(
 				'<strong>ID:</strong> ' + this.id + '<br/>' +
 				'<strong>UserAgent:</strong> ' + this.ua + '<br/>' +
-				'<strong>Screen:</strong> ' + this.screen.width + ' x ' + this.screen.height + '<br/>' +
-				'<strong>Window:</strong> ' + this.window.width + ' x ' + this.window.height + '<br/>'
+				'<strong>Screen:</strong> ' + this.screen.width + ' x ' + this.screen.height + '<br/>'
 			);
 		},
 		
 		newRecord: function(data){
-			console.log(this.id, data);
-			
+			this.highlight();
 			if(undefined === this.records[data.key]){
 				this.records[data.key] = new window.Record(data, this);
 				this.records[data.key].appendTo(this.logger);
 			}else{
 				this.records[data.key].setData(data);
 			}
+			
+			var b = this.logger[0];
+			b.scrollTop = b.scrollHeight;
 		},
 		
 		_getClassName: function(record){
@@ -68,12 +83,14 @@
 		},
 		
 		openRecord: function(key, argNum, path){
-			window.GUItoServer.openRecord(this.id, key, argNum, path);
+			if(this.connected){
+				window.GUItoServer.openRecord(this.id, key, argNum, path);
+			}
 		},
 
-		newElement: function(msg){
-			this.highlight();
+		newElement: function(msg, className){
 			$('<li>')
+				.addClass(className)
 				.html(msg)
 				.appendTo(this.logger)
 			;
@@ -82,34 +99,96 @@
 		},
 		
 		show: function(){
+			clearInterval( this.highlightTimer );
 			this.active = true;
 			this.tab
 				.removeClass('highlight')
+				.removeClass('highlight2')
 				.addClass('active')
 			;
 			this.element.addClass('active');
 		},
 		
+		rename: function(){
+			var text = this.tab.text(),
+				input
+			;
+			this.tab.empty().append(
+				input = this._createRenameInput(text)
+			);
+				
+			input
+				.focus()
+				.select()
+			;
+		},
+		
+		_createRenameInput: function(val){
+			var me = this;
+			return $('<input>')
+				.addClass('editField')
+				.attr('type', 'text')
+				.attr('max', '30')
+				.keypress(function(e){
+					if(e.keyCode === 13){
+						me.setName($(this).val());
+					}
+				})
+				.blur(function(){
+					me.setName($(this).val());
+				})
+				.change(function(){
+					me.setName($(this).val());
+				})
+				.val(val)
+			;
+		},
+		
+		setName: function(name, anounce){
+			if(undefined === name || name === ''){
+				name = this.id;
+				if(anounce !== false){
+					window.GUItoServer.command(this.id, 'setName', null);
+				}
+			}else{
+				if(anounce !== false){
+					window.GUItoServer.command(this.id, 'setName', name);
+				}
+			}
+			this.tab.text(name);
+			this.name = name;
+		},
+		
 		highlight: function(){
+console.log(this.id, ' highlight');
 			if(this.active !== true){
 				this.tab.addClass('highlight');
+
+				clearInterval( this.highlightTimer );
+				var me = this;
+				this.highlightTimer = setInterval(function(){
+					me._toggleHighlight();
+				}, 500);
+				
+			}
+		},
+		
+		_toggleHighlight: function(){
+			if(this.tab.hasClass('highlight2')){
+				this.tab.removeClass('highlight2');
+			}else{
+				this.tab.addClass('highlight2');
 			}
 		},
 		
 		hide: function(){
 			this.active = false;
 			this.tab
-				.removeClass('highlight')
 				.removeClass('active')
 			;
 			this.element
 				.removeClass('active')
 			;
-		},
-
-		disconnect: function(){
-			this.highlight();
-			this.newElement('<span style="color:red;font-weight:bold;">DISCONECTED</span>')
 		},
 		
 		promptActivity: null,
@@ -155,6 +234,32 @@
 				this.promptAIx = 0;
 			}
 			return this.promptActivity[this.promptAIx++];
+		},
+		
+		serverMessage: function(msg){
+			if(msg === 'DISCONNECT'){
+				this.newElement('DISCONNECT','DISCONNECT');
+				this.prompt.attr('disabled', 'disabled');
+				this.connected = false;
+				this.enableClose();
+			}
+		},
+		
+		enableClose: function(){
+			this.tab.addClass('unactive');
+			var me = this;
+			this.tab.click(function(e){
+				if(e.button === 1 || e.which === 2){
+					me.destroy();
+				}
+			});
+		},
+		
+		destroy: function(){
+			this.tab.remove();
+			this.element.remove();
+
+			window.serverToGUI.removeClient(this.id);
 		}
 	};
 	

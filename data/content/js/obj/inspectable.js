@@ -34,7 +34,7 @@
 
 		this.element
 			.append(
-				this.childsPlace = $('<ul>')
+				this.childsPlace = $('<ul>').hide()
 			)
 		;
 		if(ulClass){
@@ -52,6 +52,8 @@
 		$: function(selector){
 			return this.$(selector);
 		},
+		
+		onOpen: function(){},
 		
 		appendTo: function(selector){
 			this.element.appendTo(selector);
