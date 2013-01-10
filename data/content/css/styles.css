@@ -1,8 +1,11 @@
-body{background: #222;}
+body{background: #222;overflow:hidden;}
 
 .clientsTabContainer{
-	background: -webkit-linear-gradient(top,  #303030 0%,#afafaf 100%); /* Chrome10+,Safari5.1+ */
 	position: relative;
+	
+	background:#383838;
+	border: solid 1px #282828;
+	border-width: 0px 0px 1px 0px;
 }
 .clientsTabContainer .SLIDER{
 	overflow: hidden;	
@@ -19,9 +22,7 @@ body{background: #222;}
 	border: none;
 	width: 32px;
 	
-	background-image: url(img/tab_scroll_btn.gif) ,-webkit-linear-gradient(top,  #303030 0%,#afafaf 100%);
-	background-repeat: no-repeat;
-	background-position: 0 3px, 0 0;
+	background: #383838 url(img/tab_scroll_btn.gif) no-repeat 0px 3px;
 }
 .clientsTabContainer .scrollBtns .btn{
 	float: left;
@@ -37,32 +38,31 @@ body{background: #222;}
 	margin:0;padding:0;
 }
 
-.clientsTab li{
-	font: normal 12px/16px 'Trebuchet MS',Sans-Serif;
-	position: relative;
-	height: 16px;
-	line-height: 16px;
-	padding: 2px 8px;
-	border: outset 1px #aaa;
-	background: -webkit-linear-gradient(top,  #7d7e7d 0%,#0e0e0e 100%); /* Chrome10+,Safari5.1+ */
-	color: white;
-	text-align: center;
-}
-
-
 .clientsTab li.highlight{
 	-webkit-transition: background 500ms;
 	background: -webkit-linear-gradient(top,  #ffc578 0%,#fb9d23 100%); /* Chrome10+,Safari5.1+ */
 	color: #222;
 }
-.clientsTab li.highlight2{
-	background: -webkit-linear-gradient(top,  #7d7e7d 0%,#0e0e0e 100%); /* Chrome10+,Safari5.1+ */
-	color: white;
+
+.clientsTab li.highlight2,
+.clientsTab li{
+	font: bold 12px/16px Arial, Helvetica;
+	height: 16px;
+	padding: 2px 12px;
+	text-align: center;
+	border: solid 1px #6a6a6a;
+	border-width: 1px 1px 0px 0px;
+	border-color: #4a4a4a #282828;
+	background:#383838;
+	color: #959595;
 }
+
 .clientsTab li.active{
-	background: -webkit-linear-gradient(top,  #1e5799 0%,#2989d8 50%,#207cca 51%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
-	color: white; 
 	z-index: 2;
+	border-color: #6A6A6A #282828;
+	background: #535353;
+	color: #E1E1E1;
+	text-shadow: 0px 0px 3px #000;
 }
 .clientsTab li.unactive{
 	background: -webkit-linear-gradient(top,  #ff3019 0%,#cf0404 100%); /* Chrome10+,Safari5.1+ */
@@ -90,11 +90,11 @@ body{background: #222;}
 }
 
 .clientConsole .clientInfo{
-	background: lightyellow;
-	border: solid 2px gold;
-	padding: 5px;
-	margin: 5px;
-	color: #222;
+	background: -webkit-linear-gradient(top, #383838 60%,#222 100%);
+	padding: 2px 2px 5px 2px;
+	margin: 0;
+	color: #E1E1E1;
+	font: normal 10px/13px arial;
 }
 
 .clientConsole .logger{
@@ -125,17 +125,19 @@ body{background: #222;}
 .clientConsole .logger > li ul.clearfix li ul li:first-child{
 	padding-top: 0px;
 }
-
+	
 .clientConsole .prompt{
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	width: 100%;
 	border: none;
-	background: #666;
 	color: white;
-	font: normal 11px/13px Consolas;
-	height: 26px;
+	font: normal 11px/16px Consolas;
+	height: 16px;
+	resize: none;
+	background: #666 url(img/consolein.gif) no-repeat 0% 0%;
+	padding-left: 18px;
 }
 
 div.inspectable{

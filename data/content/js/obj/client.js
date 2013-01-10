@@ -55,6 +55,8 @@
 					this.prompt.boundHeight()
 				)
 			);
+			var Of = this.prompt.outerWidth() - this.prompt.width();
+			this.prompt.width( $(window).width() - Of );
 		},
 
 		fillInfo: function(){
@@ -205,7 +207,10 @@ console.log(this.id, ' highlight');
 					me.pushPA(code);
 					me.exec(code);
 					$(this).val('');
+					
 				}
+				me.analizePromptRows();
+
 				if(e.ctrlKey && e.keyCode === 38){
 					$(this).val( me.prevPA() );
 				}
@@ -213,6 +218,29 @@ console.log(this.id, ' highlight');
 					$(this).val( me.nextPA() );					
 				}
 			});
+		},
+		
+		analizePromptRows: function(){
+			var lH = parseInt(this.prompt.css('lineHeight'), 10);
+			var rO = parseInt(this.prompt.attr('rows'), 10), rN;
+			var m = this.prompt.val().match(/\n/g);
+			if(m){
+				rN = m.length + 1;
+			}else{
+				rN = 1;
+			}
+			
+			if((rN * lH) > (this.element.height()/2)){
+				rN = parseInt( (this.element.height()/2) / lH);
+			}
+
+			if(rN != rO){
+				this.prompt
+					.attr('rows',rN)
+					.height(rN * lH)
+				;
+				this.resize();
+			}
 		},
 		
 		exec: function(code){

@@ -72,7 +72,7 @@
 		wResize: function(){
 			this.consoles.height(
 				$(window).height() - 
-				this.tabs.outerHeight()
+				this.tabs.boundHeight()
 			);
 				
 			this.slider.width(
