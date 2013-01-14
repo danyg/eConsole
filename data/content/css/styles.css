@@ -138,6 +138,7 @@ body{background: #222;overflow:hidden;}
 	resize: none;
 	background: #666 url(img/consolein.gif) no-repeat 0% 0%;
 	padding-left: 18px;
+	margin-bottom: 1px;
 }
 
 div.inspectable{

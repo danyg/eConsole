@@ -277,8 +277,11 @@ console.log(this.id, ' highlight');
 			this.tab.addClass('unactive');
 			var me = this;
 			this.tab.click(function(e){
+console.log(e);
 				if(e.button === 1 || e.which === 2){
 					me.destroy();
+					e.preventDefault();
+					return false;
 				}
 			});
 		},

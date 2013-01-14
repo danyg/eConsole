@@ -2,8 +2,28 @@
  * @overview 
  * @author Daniel Goberitz <daniel.goberitz@laviniainteractiva.com>
  */
-
 (function(){
+	$(window).bind('app-ready', function(){
+		if(window.externalServer !== null){
+			var socket = io.connect('http://' + window.externalServer + '/');
+			socket.on('welcome', function(){
+				socket.emit('clientInfo', {
+					eConsole: true
+				});
+			});
+			socket.on('eConsoleExec', function(data){
+				window.serverToGUI[data.cmd].apply(window.serverToGUI, data.args);
+			});
+
+			if(undefined === window.GUItoServer){
+				requirejs(['GUItoExternalServer'], function(GUItoServer){
+					GUItoServer.socket = socket;
+					window.GUItoServer = GUItoServer;
+				})
+			}
+		}
+	});
+	
 
 	window.serverToGUI = {
 		clients: {},
