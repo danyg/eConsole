@@ -34,11 +34,30 @@
 
 			this.tabTmpl = $('<li class="Tab"></li>');
 			
+			this._setEvents();
 			this.wResize();
+			
+			window.emit('gui-ready');
+		},
+		
+		_setEvents: function(){
+			this._scrollTabs();
+			
 			$(window).resize(function(){
 				me.wResize();
 			});
 			
+			
+			
+			$(document).mousedown(function(e){
+				if(e.button === 1){
+					e.preventDefault();
+				}
+			});
+			
+		},
+		
+		_scrollTabs: function(){
 			var scrollI, elm = this.slider, step;
 			$('.LEFT_SCROLL').mousedown(function(){
 				var i = 0;
@@ -64,9 +83,6 @@
 			}).bind('mouseout mouseup blur', function(){
 				clearInterval(scrollI);
 			});
-			
-			
-			window.emit('gui-ready');
 		},
 		
 		wResize: function(){
@@ -104,7 +120,7 @@
 				.appendTo(this.tabs)
 				.disableSelection()
 			;
-console.log('name', name);
+
 			ret.tab
 				.text(name)
 			;

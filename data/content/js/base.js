@@ -1,5 +1,9 @@
 (function($){
 	
+	require.config({
+		baseUrl: '/js/obj/'
+	})
+	
 	function getOffset(e, l){
 		var i,
 			o = 0,
