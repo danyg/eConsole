@@ -99,6 +99,7 @@ p.tagline {
   background-color: #fff;
 }
 
+.language-bar,
 .download-bar {
   background: #222;
   border: 5px solid #444;
@@ -579,3 +580,50 @@ footer .owner p a {
 .highlight .vg { color: #008080 } /* Name.Variable.Global */
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+/* http://positioniseverything.net/easyclearing.html */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	#display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	#display: block;
+}
+
+* html .clearfix {height: 1%; }
+* html .clearfix {height: 1%; }
+
+ul.LinkBar{list-style: none;}
+	ul.LinkBar > li{display: inline-block; #float: left; #display: inline;}
+	
+.language-bar{
+	position: fixed;
+	top: 0px;
+	right: 0;
+	margin: 0;
+	padding: 3px 10px;
+	border-top: none;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	
+}
+
+p code{
+	background: #3b3b3b;
+	color: #d6d6d6;
+	font-family: 'Monaco', 'Lucida Console', monospace;
+	padding: .1em .4em;
+	font-size: 0.8em;
+}
+
+div.center{text-align: center;}
+div.center img{margin: 0 auto;}
