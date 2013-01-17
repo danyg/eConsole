@@ -612,9 +612,12 @@ ul.LinkBar{list-style: none;}
 	margin: 0;
 	padding: 3px 10px;
 	border-top: none;
-	border-bottom-left-radius: 12px;
+	-moz-border-radius-bottomright: 12px;
+	-webkit-border-bottom-right-radius: 12px;
 	border-bottom-right-radius: 12px;
-	
+	-moz-border-radius-bottomleft: 12px;
+	-webkit-border-bottom-left-radius: 12px;
+	border-bottom-left-radius: 12px;
 }
 
 p code{
@@ -627,3 +630,28 @@ p code{
 
 div.center{text-align: center;}
 div.center img{margin: 0 auto;}
+
+.SocialButtons{
+	position: fixed;
+	left: 0;
+	top: 50%;
+	margin-top: -53px;
+	height: 106px;
+	width: 75px;
+	overflow: hidden;
+	
+	border: 5px solid #444;
+	border-left: none;
+	-moz-border-radius-topright: 12px;
+	-webkit-border-top-right-radius: 12px;
+	border-top-right-radius: 12px;
+	-moz-border-radius-bottomright: 12px;
+	-webkit-border-bottom-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	
+	background: #222;
+	padding: 10px 5px 10px 10px;
+}
+
+.SocialButtons li{text-align: center;padding-bottom: 5px;height: 25px; overflow: hidden;}
+.SocialButtons .fb-like{width: 78px; }
